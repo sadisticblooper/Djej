@@ -10,44 +10,57 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #f3f4f6;
       color: #1f2937;
+      overflow: hidden; /* Prevent body scrollbars */
     }
     .iframe-container {
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      min-height: 100vh;
-      padding: 1rem;
+      width: 100vw; /* Full viewport width */
+      height: 100vh; /* Full viewport height */
+      margin: 0;
+      padding: 0; /* Remove padding */
       box-sizing: border-box;
     }
     iframe {
-      width: 100%;
-      max-width: 800px;
-      min-height: 80vh;
+      width: 100%; /* Full width of container */
+      height: 100%; /* Full height of container */
       border: none;
-      border-radius: 0.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 0; /* Remove radius for full-screen look */
+      box-shadow: none; /* Remove shadow for seamless look */
       background: #fff;
     }
     @media (max-width: 640px) {
       iframe {
-        min-height: 90vh;
+        width: 100%;
+        height: 100%;
       }
     }
   </style>
 </head>
 <body>
   <div class="iframe-container">
-    <iframe id="diaryApp" src="https://script.google.com/macros/s/AKfycbzrcQrdbQ5DzI8XsY8DtjSYT9ywCr4dxnoCXebLMUI2EfCbnKhwhZpMWmfvavCCFTGCSg/exec"></iframe>
+    <iframe id="diaryApp" src="https://script.google.com/macros/s/AKfycbx34VAXnYy3ny2urgdIs8EBLwMiItIcjiHWjX_ViT5azdR2aclNmIzMXs1X40-jRP8nPw/exec"></iframe>
   </div>
   <script>
+    // Dynamically adjust iframe height to content
     const iframe = document.getElementById('diaryApp');
     iframe.addEventListener('load', () => {
       try {
         const contentHeight = iframe.contentWindow.document.body.scrollHeight;
-        iframe.style.height = `${contentHeight}px`;
+        iframe.style.height = `${Math.max(contentHeight, window.innerHeight)}px`;
       } catch (e) {
         console.warn('Dynamic height adjustment failed:', e);
-        iframe.style.height = '80vh';
+        iframe.style.height = '100vh'; /* Fallback to full viewport height */
+      }
+    });
+    // Adjust height on window resize
+    window.addEventListener('resize', () => {
+      try {
+        const contentHeight = iframe.contentWindow.document.body.scrollHeight;
+        iframe.style.height = `${Math.max(contentHeight, window.innerHeight)}px`;
+      } catch (e) {
+        iframe.style.height = '100vh';
       }
     });
   </script>
