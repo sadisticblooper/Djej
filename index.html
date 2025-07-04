@@ -21,8 +21,8 @@
     }
     iframe {
       width: 100%;
-      max-width: 800px; /* Matches app's max-w-3xl */
-      min-height: 80vh; /* Default height */
+      max-width: 800px;
+      min-height: 80vh;
       border: none;
       border-radius: 0.5rem;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -30,17 +30,16 @@
     }
     @media (max-width: 640px) {
       iframe {
-        min-height: 90vh; /* Taller on mobile */
+        min-height: 90vh;
       }
     }
   </style>
 </head>
 <body>
   <div class="iframe-container">
-    <iframe id="diaryApp" src="https://script.google.com/macros/s/AKfycbxNPvrCAa6emJMGXlyjMgYTiAewtTtx8gwC3mKXcPjpP4_P09CwSiZN11uDecLcORkoBw/exec"></iframe>
+    <iframe id="diaryApp" src="https://script.google.com/macros/s/AKfycbzrcQrdbQ5DzI8XsY8DtjSYT9ywCr4dxnoCXebLMUI2EfCbnKhwhZpMWmfvavCCFTGCSg/exec"></iframe>
   </div>
   <script>
-    // Optional: Dynamically adjust iframe height
     const iframe = document.getElementById('diaryApp');
     iframe.addEventListener('load', () => {
       try {
@@ -48,7 +47,7 @@
         iframe.style.height = `${contentHeight}px`;
       } catch (e) {
         console.warn('Dynamic height adjustment failed:', e);
-        iframe.style.height = '80vh'; // Fallback
+        iframe.style.height = '80vh';
       }
     });
   </script>
