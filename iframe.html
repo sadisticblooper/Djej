@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Personal Diary</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f3f4f6;
+      color: #1f2937;
+    }
+    .iframe-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    iframe {
+      width: 100%;
+      max-width: 800px; /* Matches app's max-w-3xl */
+      min-height: 80vh; /* Default height */
+      border: none;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background: #fff;
+    }
+    @media (max-width: 640px) {
+      iframe {
+        min-height: 90vh; /* Taller on mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="iframe-container">
+    <iframe id="diaryApp" src="https://script.google.com/macros/s/AKfycbxNPvrCAa6emJMGXlyjMgYTiAewtTtx8gwC3mKXcPjpP4_P09CwSiZN11uDecLcORkoBw/exec"></iframe>
+  </div>
+  <script>
+    // Optional: Dynamically adjust iframe height
+    const iframe = document.getElementById('diaryApp');
+    iframe.addEventListener('load', () => {
+      try {
+        const contentHeight = iframe.contentWindow.document.body.scrollHeight;
+        iframe.style.height = `${contentHeight}px`;
+      } catch (e) {
+        console.warn('Dynamic height adjustment failed:', e);
+        iframe.style.height = '80vh'; // Fallback
+      }
+    });
+  </script>
+</body>
+</html>
