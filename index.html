@@ -2,33 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>My Personal Diary</title>
   <style>
-    body {
+    html, body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f3f4f6;
-      color: #1f2937;
-      overflow: hidden; /* Prevent body scrollbars */
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden; /* Prevent any scrolling outside iframe */
     }
     .iframe-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      width: 100vw; /* Full viewport width */
-      height: 100vh; /* Full viewport height */
-      margin: 0;
-      padding: 0; /* Remove padding */
+      align-items: stretch; /* Stretch iframe to fill container */
       box-sizing: border-box;
     }
     iframe {
-      width: 100%; /* Full width of container */
-      height: 100%; /* Full height of container */
+      width: 100%;
+      height: 100%;
       border: none;
-      border-radius: 0; /* Remove radius for full-screen look */
-      box-shadow: none; /* Remove shadow for seamless look */
       background: #fff;
+      margin: 0;
+      padding: 0;
+      display: block; /* Remove any default inline spacing */
     }
     @media (max-width: 640px) {
       iframe {
@@ -43,26 +47,22 @@
     <iframe id="diaryApp" src="https://script.google.com/macros/s/AKfycbx34VAXnYy3ny2urgdIs8EBLwMiItIcjiHWjX_ViT5azdR2aclNmIzMXs1X40-jRP8nPw/exec"></iframe>
   </div>
   <script>
-    // Dynamically adjust iframe height to content
     const iframe = document.getElementById('diaryApp');
-    iframe.addEventListener('load', () => {
+    // Adjust height on load and resize
+    function adjustIframeHeight() {
       try {
         const contentHeight = iframe.contentWindow.document.body.scrollHeight;
-        iframe.style.height = `${Math.max(contentHeight, window.innerHeight)}px`;
+        const viewportHeight = window.innerHeight;
+        iframe.style.height = `${Math.max(contentHeight, viewportHeight)}px`;
       } catch (e) {
         console.warn('Dynamic height adjustment failed:', e);
-        iframe.style.height = '100vh'; /* Fallback to full viewport height */
+        iframe.style.height = '100vh'; // Fallback to full viewport height
       }
-    });
-    // Adjust height on window resize
-    window.addEventListener('resize', () => {
-      try {
-        const contentHeight = iframe.contentWindow.document.body.scrollHeight;
-        iframe.style.height = `${Math.max(contentHeight, window.innerHeight)}px`;
-      } catch (e) {
-        iframe.style.height = '100vh';
-      }
-    });
+    }
+    iframe.addEventListener('load', adjustIframeHeight);
+    window.addEventListener('resize', adjustIframeHeight);
+    // Initial adjustment
+    adjustIframeHeight();
   </script>
 </body>
 </html>
